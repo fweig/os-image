@@ -23,7 +23,9 @@ open-vm-tools \
 plasma-drkonqi \
 plasma-welcome \
 python3-boto3 \
-samba
+realmd \
+samba \
+spice-vdagent
 
 ### Install packages
 
