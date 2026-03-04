@@ -99,3 +99,9 @@ EOF
 #### Example for enabling a System Unit File
 
 systemctl enable podman.socket
+
+### Disable SELinux and Spectre mitigations for performance
+mkdir -p /usr/lib/bootc/kargs.d
+cat > /usr/lib/bootc/kargs.d/10-performance.toml << 'EOF'
+kargs = ["selinux=0", "mitigations=off"]
+EOF
