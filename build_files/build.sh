@@ -34,6 +34,14 @@ samba
 # this installs a package from fedora repos
 dnf5 install -y thunderbird
 
+# Install multimedia codecs and VLC from RPMfusion
+dnf5 install -y \
+ffmpeg \
+gstreamer1-plugins-bad-freeworld \
+gstreamer1-plugins-ugly \
+gstreamer1-libav \
+vlc
+
 # Use a COPR Example:
 #
 # dnf5 -y copr enable ublue-os/staging
