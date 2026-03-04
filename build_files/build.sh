@@ -2,6 +2,28 @@
 
 set -ouex pipefail
 
+### Remove unwanted packages
+
+# Remove KDE bloat and other unwanted packages
+# Only includes packages actually present in the base image
+dnf5 remove -y \
+akonadi-server \
+akonadi-server-mysql \
+kate \
+kde-connect \
+kio-gdrive \
+krfb \
+krfb-libs \
+kwrite \
+libkgapi \
+libwinpr \
+mpage \
+open-vm-tools \
+plasma-drkonqi \
+plasma-welcome \
+python3-boto3 \
+samba
+
 ### Install packages
 
 # Packages can be installed from any enabled yum repo on the image.
@@ -10,7 +32,7 @@ set -ouex pipefail
 # https://mirrors.rpmfusion.org/mirrorlist?path=free/fedora/updates/43/x86_64/repoview/index.html&protocol=https&redirect=1
 
 # this installs a package from fedora repos
-dnf5 install -y tmux 
+dnf5 install -y tmux
 
 # Use a COPR Example:
 #
