@@ -9,6 +9,7 @@ set -ouex pipefail
 dnf5 remove -y \
 akonadi-server \
 akonadi-server-mysql \
+firefox \
 kate \
 kde-connect \
 kio-gdrive \
@@ -41,6 +42,52 @@ gstreamer1-plugins-bad-freeworld \
 gstreamer1-plugins-ugly \
 gstreamer1-libav \
 vlc
+
+### Install Firefox Beta from Mozilla
+# Download and extract Firefox Beta
+curl -L "https://download.mozilla.org/?product=firefox-beta-latest-ssl&os=linux64&lang=en-US" -o /tmp/firefox-beta.tar
+mkdir -p /opt/firefox-beta
+tar -xf /tmp/firefox-beta.tar -C /opt/firefox-beta --strip-components=1
+rm /tmp/firefox-beta.tar
+
+# Disable Firefox updater (can't update in immutable image)
+mkdir -p /opt/firefox-beta/distribution
+cat > /opt/firefox-beta/distribution/policies.json << 'EOF'
+{
+  "policies": {
+    "DisableAppUpdate": true,
+    "ManualAppUpdateOnly": true
+  }
+}
+EOF
+
+# Create desktop file
+cat > /usr/share/applications/firefox-beta.desktop << 'EOF'
+[Desktop Entry]
+Version=1.0
+Name=Firefox Beta
+Comment=Browse the World Wide Web (Beta)
+GenericName=Web Browser
+Keywords=Internet;WWW;Browser;Web;Explorer
+Exec=/opt/firefox-beta/firefox %u
+Terminal=false
+X-MultipleArgs=false
+Type=Application
+Icon=/opt/firefox-beta/browser/chrome/icons/default/default128.png
+Categories=GNOME;GTK;Network;WebBrowser;
+MimeType=text/html;text/xml;application/xhtml+xml;application/xml;application/rss+xml;application/rdf+xml;image/gif;image/jpeg;image/png;x-scheme-handler/http;x-scheme-handler/https;x-scheme-handler/ftp;x-scheme-handler/chrome;video/webm;application/x-xpinstall;
+StartupNotify=true
+StartupWMClass=firefox-beta
+Actions=new-window;new-private-window;
+
+[Desktop Action new-window]
+Name=Open a New Window
+Exec=/opt/firefox-beta/firefox -new-window
+
+[Desktop Action new-private-window]
+Name=Open a New Private Window
+Exec=/opt/firefox-beta/firefox -private-window
+EOF
 
 # Use a COPR Example:
 #
