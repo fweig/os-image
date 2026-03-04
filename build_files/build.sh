@@ -33,10 +33,14 @@ samba
 # https://mirrors.rpmfusion.org/mirrorlist?path=free/fedora/updates/43/x86_64/repoview/index.html&protocol=https&redirect=1
 
 # this installs a package from fedora repos
-dnf5 install -y thunderbird
+dnf5 install -y thunderbird steam nextcloud-client
 
-# Install multimedia codecs and VLC from RPMfusion
+# Install multimedia codecs, VLC, and Discord from RPMfusion
 dnf5 install -y \
+  "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm" \
+  "https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm"
+dnf5 install -y \
+discord \
 ffmpeg \
 gstreamer1-plugins-bad-freeworld \
 gstreamer1-plugins-ugly \
