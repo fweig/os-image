@@ -1,4 +1,4 @@
-export image_name := env("IMAGE_NAME", "image-template") # output image name, usually same as repo name, change as needed
+export image_name := env("IMAGE_NAME", "feldspar")
 export default_tag := env("DEFAULT_TAG", "latest")
 export bib_image := env("BIB_IMAGE", "quay.io/centos-bootc/bootc-image-builder:latest")
 
@@ -85,7 +85,7 @@ sudoif command *args:
 # This will build an image 'aurora:lts' with DX and GDX enabled.
 #
 
-# Build the gaming image (Fedora-based)
+# Build the Feldspar gaming image (Fedora-based)
 build $target_image=image_name $tag=default_tag:
     #!/usr/bin/env bash
 
@@ -98,12 +98,12 @@ build $target_image=image_name $tag=default_tag:
     podman build \
         "${BUILD_ARGS[@]}" \
         --pull=newer \
-        -f Containerfile.gaming \
+        -f Containerfile.feldspar \
         --tag "${target_image}:${tag}" \
         .
 
-# Build the stable image (AlmaLinux-based)
-build-stable $target_image=(image_name + "-stable") $tag=default_tag:
+# Build the Feldspar Granite stable image (AlmaLinux-based)
+build-granite $target_image=(image_name + "-granite") $tag=default_tag:
     #!/usr/bin/env bash
 
     BUILD_ARGS=()
@@ -114,7 +114,7 @@ build-stable $target_image=(image_name + "-stable") $tag=default_tag:
     podman build \
         "${BUILD_ARGS[@]}" \
         --pull=newer \
-        -f Containerfile.stable \
+        -f Containerfile.granite \
         --tag "${target_image}:${tag}" \
         .
 

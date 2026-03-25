@@ -4,16 +4,18 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a bootc container-based OS image template derived from Universal Blue. It builds customized, immutable Linux operating system images that are container-native and deployable via OCI/Podman.
+Feldspar is a bootc container-based OS image project derived from Universal Blue. It produces two images:
+- **Feldspar** — Gaming image (Fedora-based, via `Containerfile.feldspar`)
+- **Feldspar Granite** — Stable image (AlmaLinux-based, via `Containerfile.granite`)
 
 ## Build Commands
 
 All commands use `just` (task runner). Run `just` with no arguments to see available recipes.
 
 ```bash
-# Build container image
-just build                    # Build with default name/tag
-just build aurora lts         # Build with custom name and tag
+# Build container images
+just build                    # Build Feldspar (gaming)
+just build-granite            # Build Feldspar Granite (stable)
 
 # Build bootable disk images (requires sudo, uses Bootc Image Builder)
 just build-qcow2             # Build QCOW2 VM image
@@ -40,14 +42,16 @@ just clean                   # Remove build artifacts (_build*, output/)
 ## Architecture
 
 **Build flow:**
-1. `Containerfile` defines the image build starting from a base image (default: `ghcr.io/ublue-os/bazzite:stable`)
-2. `build_files/build.sh` is mounted and executed during build - this is where packages are installed and customizations are made
+1. `Containerfile.feldspar` / `Containerfile.granite` define image builds from their respective base images
+2. `build_files/build-gaming.sh` / `build_files/build-stable.sh` are mounted and executed during build
 3. `bootc container lint` validates the final image
 4. Disk images (QCOW2/ISO/raw) are generated using Bootc Image Builder (BIB)
 
 **Key files:**
-- `Containerfile` - Image build definition, change `FROM` line to switch base images
-- `build_files/build.sh` - Main customization script (package installation, systemctl enables)
+- `Containerfile.feldspar` - Gaming image build (Fedora/Kinoite-based)
+- `Containerfile.granite` - Stable image build (AlmaLinux-based)
+- `build_files/build-gaming.sh` - Gaming customization script
+- `build_files/build-stable.sh` - Stable customization script
 - `Justfile` - All build/run commands, configurable via `image_name`, `default_tag`, `bib_image` variables
 - `disk_config/disk.toml` - QCOW2/raw disk configuration (20 GiB Btrfs root)
 - `disk_config/iso-*.toml` - ISO installer configurations with Anaconda kickstart

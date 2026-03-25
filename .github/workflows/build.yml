@@ -14,10 +14,9 @@ on:
   workflow_dispatch:
 
 env:
-  IMAGE_DESC: "My Customized Universal Blue Image"
-  IMAGE_KEYWORDS: "bootc,ublue,universal-blue"
+  IMAGE_DESC: "Feldspar - Custom Universal Blue Image"
+  IMAGE_KEYWORDS: "bootc,ublue,universal-blue,feldspar"
   IMAGE_LOGO_URL: "https://avatars.githubusercontent.com/u/120078124?s=200&v=4"  # Put your own image here for a fancy profile on https://artifacthub.io/!
-  IMAGE_NAME: "${{ github.event.repository.name }}"  # output image name, usually same as repo name
   IMAGE_REGISTRY: "ghcr.io/${{ github.repository_owner }}"  # do not edit
   DEFAULT_TAG: "latest"
 
@@ -33,10 +32,12 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - edition: gaming
-            containerfile: ./Containerfile.gaming
-          - edition: stable
-            containerfile: ./Containerfile.stable
+          - edition: feldspar
+            image_name: feldspar
+            containerfile: ./Containerfile.feldspar
+          - edition: feldspar-granite
+            image_name: feldspar-granite
+            containerfile: ./Containerfile.granite
 
     permissions:
       contents: read
@@ -48,7 +49,7 @@ jobs:
         run: |
           # Lowercase the image uri
           echo "IMAGE_REGISTRY=${IMAGE_REGISTRY,,}" >> ${GITHUB_ENV}
-          echo "IMAGE_NAME=${IMAGE_NAME,,}" >> ${GITHUB_ENV}
+          echo "IMAGE_NAME=${{ matrix.image_name }}" >> ${GITHUB_ENV}
 
       # These stage versions are pinned by https://github.com/renovatebot/renovate
       - name: Checkout
@@ -76,20 +77,20 @@ jobs:
           # This generates all the tags for your image, you can add custom tags here too!
           # Default tags are "$DEFAULT_TAG" and "$DEFAULT_TAG.$date".
           tags: |
-            type=raw,value=${{ matrix.edition }}
-            type=raw,value=${{ matrix.edition }}.{{date 'YYYYMMDD'}}
-            type=sha,prefix=${{ matrix.edition }}.,enable=${{ github.event_name == 'pull_request' }}
-            type=ref,event=pr,prefix=${{ matrix.edition }}.
+            type=raw,value=${{ env.DEFAULT_TAG }}
+            type=raw,value={{date 'YYYYMMDD'}}
+            type=sha,enable=${{ github.event_name == 'pull_request' }}
+            type=ref,event=pr
           labels: |
-            io.artifacthub.package.readme-url=https://raw.githubusercontent.com/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}/${{ github.sha }}/README.md
+            io.artifacthub.package.readme-url=https://raw.githubusercontent.com/${{ github.repository }}/refs/heads/main/README.md
             org.opencontainers.image.created=${{ steps.date.outputs.date }}
             org.opencontainers.image.description=${{ env.IMAGE_DESC }}
-            org.opencontainers.image.documentation=https://raw.githubusercontent.com/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}/${{ github.sha }}/README.md
-            org.opencontainers.image.source=https://github.com/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}/blob/${{ github.sha }}/${{ matrix.containerfile }}
+            org.opencontainers.image.documentation=https://raw.githubusercontent.com/${{ github.repository }}/refs/heads/main/README.md
+            org.opencontainers.image.source=https://github.com/${{ github.repository }}/blob/${{ github.sha }}/${{ matrix.containerfile }}
             org.opencontainers.image.title=${{ env.IMAGE_NAME }}
-            org.opencontainers.image.url=https://github.com/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}/tree/${{ github.sha }}
+            org.opencontainers.image.url=https://github.com/${{ github.repository }}/tree/${{ github.sha }}
             org.opencontainers.image.vendor=${{ github.repository_owner }}
-            org.opencontainers.image.version=${{ matrix.edition }}.{{date 'YYYYMMDD'}}
+            org.opencontainers.image.version={{date 'YYYYMMDD'}}
             io.artifacthub.package.deprecated=false
             io.artifacthub.package.keywords=${{ env.IMAGE_KEYWORDS }}
             io.artifacthub.package.license=Apache-2.0
