@@ -1,10 +1,10 @@
-# os-image
+# Feldspar
 
 Custom bootc container-based OS images built on [Universal Blue](https://universal-blue.org/). These are immutable, container-native Linux desktop images deployed as OCI containers.
 
 ## Editions
 
-### Gaming (Fedora)
+### Feldspar (Gaming)
 
 Based on `ghcr.io/ublue-os/kinoite-main:latest`. A KDE Plasma desktop with gaming and multimedia focus.
 
@@ -15,7 +15,7 @@ Based on `ghcr.io/ublue-os/kinoite-main:latest`. A KDE Plasma desktop with gamin
 - SELinux disabled, Spectre mitigations off for performance
 - Podman socket enabled
 
-### Stable (AlmaLinux)
+### Feldspar Granite (Stable)
 
 Based on `quay.io/almalinuxorg/atomic-desktop-kde:10`. A KDE Plasma desktop for reliability.
 
@@ -32,11 +32,11 @@ Both editions remove KDE bloat (Akonadi, KDE Connect, Kate, Kwrite, Krfb, etc.) 
 From any bootc-based system:
 
 ```bash
-# Gaming edition
-sudo bootc switch ghcr.io/fweig/os-image:gaming
+# Feldspar (Gaming)
+sudo bootc switch ghcr.io/fweig/feldspar:latest
 
-# Stable edition
-sudo bootc switch ghcr.io/fweig/os-image:stable
+# Feldspar Granite (Stable)
+sudo bootc switch ghcr.io/fweig/feldspar-granite:latest
 ```
 
 ## Usage
@@ -47,8 +47,8 @@ Requires [just](https://just.systems/), [Podman](https://podman.io/), and option
 just                          # List all available recipes
 
 # Build container images
-just build                    # Gaming edition (Fedora)
-just build-stable             # Stable edition (AlmaLinux)
+just build                    # Feldspar (Gaming)
+just build-granite            # Feldspar Granite (Stable)
 
 # Build bootable disk images (requires sudo)
 just build-qcow2              # QCOW2 VM image
@@ -75,8 +75,8 @@ GitHub Actions builds and publishes both editions daily to GHCR with Cosign sign
 
 | Path | Description |
 |---|---|
-| `Containerfile.gaming` | Gaming edition image definition (Fedora/Kinoite) |
-| `Containerfile.stable` | Stable edition image definition (AlmaLinux) |
+| `Containerfile.feldspar` | Feldspar image definition (Fedora/Kinoite) |
+| `Containerfile.granite` | Feldspar Granite image definition (AlmaLinux) |
 | `build_files/build-gaming.sh` | Gaming edition packages and customizations |
 | `build_files/build-stable.sh` | Stable edition packages and customizations |
 | `Justfile` | All build/run/lint commands |
