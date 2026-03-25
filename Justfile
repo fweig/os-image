@@ -98,6 +98,7 @@ build $target_image=image_name $tag=default_tag:
     podman build \
         "${BUILD_ARGS[@]}" \
         --pull=newer \
+        -f Containerfile.gaming
         --tag "${target_image}:${tag}" \
         .
 
