@@ -41,6 +41,11 @@ dnf5 install -y firefox-beta
 
 dnf5 install -y steam
 
+# Install latest stable Mesa from Terra
+dnf5 -y install --nogpgcheck --repofrompath 'terra,https://repos.fyralabs.com/terra$releasever' terra-release-mesa
+dnf5 -y swap --from-repo=terra-mesa mesa-filesystem mesa-filesystem
+dnf5 -y config-manager setopt "*fedora*".exclude="mesa-*"
+
 # Install multimedia codecs, VLC, and Discord from RPMfusion
 dnf5 install -y \
   "https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm" \
