@@ -1,17 +1,31 @@
 # Allow build scripts to be referenced without being copied into the final image
 FROM scratch AS ctx
-COPY build_files /
+COPY build_files/granite /
 
 # Base Image - AlmaLinux Atomic Desktop KDE (pinned to major version 10)
 FROM quay.io/almalinuxorg/atomic-desktop-kde:10
 
 ### MODIFICATIONS
+## Each script is a separate layer for smaller updates.
 
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
-    --mount=type=cache,dst=/var/log \
-    --mount=type=tmpfs,dst=/tmp \
-    /ctx/build-stable.sh
+    /ctx/remove-packages.sh
+
+RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
+    --mount=type=cache,dst=/var/cache \
+    /ctx/install-base.sh
+
+RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
+    --mount=type=cache,dst=/var/cache \
+    /ctx/install-firefox.sh
+
+RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
+    --mount=type=cache,dst=/var/cache \
+    /ctx/install-multimedia.sh
+
+RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
+    /ctx/configure-system.sh
 
 ### LINTING
 ## Verify final image and contents are correct.

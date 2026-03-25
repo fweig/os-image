@@ -43,15 +43,15 @@ just clean                   # Remove build artifacts (_build*, output/)
 
 **Build flow:**
 1. `Containerfile.feldspar` / `Containerfile.granite` define image builds from their respective base images
-2. `build_files/build-gaming.sh` / `build_files/build-stable.sh` are mounted and executed during build
+2. Build scripts in `build_files/gaming/` / `build_files/granite/` are mounted and executed as separate layers during build
 3. `bootc container lint` validates the final image
 4. Disk images (QCOW2/ISO/raw) are generated using Bootc Image Builder (BIB)
 
 **Key files:**
 - `Containerfile.feldspar` - Gaming image build (Fedora/Kinoite-based)
 - `Containerfile.granite` - Stable image build (AlmaLinux-based)
-- `build_files/build-gaming.sh` - Gaming customization script
-- `build_files/build-stable.sh` - Stable customization script
+- `build_files/gaming/` - Gaming build scripts (one per layer: remove-packages, install-base, install-firefox-beta, install-gaming, install-multimedia, configure-system)
+- `build_files/granite/` - Stable build scripts (one per layer: remove-packages, install-base, install-firefox, install-multimedia, configure-system)
 - `Justfile` - All build/run commands, configurable via `image_name`, `default_tag`, `bib_image` variables
 - `disk_config/disk.toml` - QCOW2/raw disk configuration (20 GiB Btrfs root)
 - `disk_config/iso-*.toml` - ISO installer configurations with Anaconda kickstart

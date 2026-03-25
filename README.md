@@ -77,8 +77,8 @@ GitHub Actions builds and publishes both editions daily to GHCR with Cosign sign
 |---|---|
 | `Containerfile.feldspar` | Feldspar image definition (Fedora/Kinoite) |
 | `Containerfile.granite` | Feldspar Granite image definition (AlmaLinux) |
-| `build_files/build-gaming.sh` | Gaming edition packages and customizations |
-| `build_files/build-stable.sh` | Stable edition packages and customizations |
+| `build_files/gaming/` | Gaming edition scripts (one per image layer) |
+| `build_files/granite/` | Stable edition scripts (one per image layer) |
 | `Justfile` | All build/run/lint commands |
 | `disk_config/` | Disk and ISO configuration for Bootc Image Builder |
 | `.github/workflows/build.yml` | Container image CI (build + publish + sign) |

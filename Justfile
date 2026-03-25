@@ -90,7 +90,6 @@ build $target_image=image_name $tag=default_tag:
     #!/usr/bin/env bash
 
     BUILD_ARGS=()
-    BUILD_ARGS+=("--build-arg" "BUILD_SCRIPT=build-gaming.sh")
     if [[ -z "$(git status -s)" ]]; then
         BUILD_ARGS+=("--build-arg" "SHA_HEAD_SHORT=$(git rev-parse --short HEAD)")
     fi
