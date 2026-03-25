@@ -27,8 +27,16 @@ concurrency:
 
 jobs:
   build_push:
-    name: Build and push image
+    name: Build and push image (${{ matrix.edition }})
     runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - edition: gaming
+            containerfile: ./Containerfile.gaming
+          - edition: stable
+            containerfile: ./Containerfile.stable
 
     permissions:
       contents: read
@@ -68,21 +76,20 @@ jobs:
           # This generates all the tags for your image, you can add custom tags here too!
           # Default tags are "$DEFAULT_TAG" and "$DEFAULT_TAG.$date".
           tags: |
-            type=raw,value=${{ env.DEFAULT_TAG }}
-            type=raw,value=${{ env.DEFAULT_TAG }}.{{date 'YYYYMMDD'}}
-            type=raw,value={{date 'YYYYMMDD'}}
-            type=sha,enable=${{ github.event_name == 'pull_request' }}
-            type=ref,event=pr
+            type=raw,value=${{ matrix.edition }}
+            type=raw,value=${{ matrix.edition }}.{{date 'YYYYMMDD'}}
+            type=sha,prefix=${{ matrix.edition }}.,enable=${{ github.event_name == 'pull_request' }}
+            type=ref,event=pr,prefix=${{ matrix.edition }}.
           labels: |
             io.artifacthub.package.readme-url=https://raw.githubusercontent.com/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}/${{ github.sha }}/README.md
             org.opencontainers.image.created=${{ steps.date.outputs.date }}
             org.opencontainers.image.description=${{ env.IMAGE_DESC }}
             org.opencontainers.image.documentation=https://raw.githubusercontent.com/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}/${{ github.sha }}/README.md
-            org.opencontainers.image.source=https://github.com/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}/blob/${{ github.sha }}/Containerfile
+            org.opencontainers.image.source=https://github.com/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}/blob/${{ github.sha }}/${{ matrix.containerfile }}
             org.opencontainers.image.title=${{ env.IMAGE_NAME }}
             org.opencontainers.image.url=https://github.com/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}/tree/${{ github.sha }}
             org.opencontainers.image.vendor=${{ github.repository_owner }}
-            org.opencontainers.image.version=${{ env.DEFAULT_TAG }}.{{date 'YYYYMMDD'}}
+            org.opencontainers.image.version=${{ matrix.edition }}.{{date 'YYYYMMDD'}}
             io.artifacthub.package.deprecated=false
             io.artifacthub.package.keywords=${{ env.IMAGE_KEYWORDS }}
             io.artifacthub.package.license=Apache-2.0
@@ -97,9 +104,7 @@ jobs:
         uses: redhat-actions/buildah-build@7a95fa7ee0f02d552a32753e7414641a04307056 # v2
         with:
           containerfiles: |
-            ./Containerfile
-          # Postfix image name with -custom to make it a little more descriptive
-          # Syntax: https://docs.github.com/en/actions/learn-github-actions/expressions#format
+            ${{ matrix.containerfile }}
           image: ${{ env.IMAGE_NAME }}
           tags: ${{ steps.metadata.outputs.tags }}
           labels: ${{ steps.metadata.outputs.labels }}

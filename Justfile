@@ -85,8 +85,24 @@ sudoif command *args:
 # This will build an image 'aurora:lts' with DX and GDX enabled.
 #
 
-# Build the image using the specified parameters
+# Build the gaming image (Fedora-based)
 build $target_image=image_name $tag=default_tag:
+    #!/usr/bin/env bash
+
+    BUILD_ARGS=()
+    BUILD_ARGS+=("--build-arg" "BUILD_SCRIPT=build-gaming.sh")
+    if [[ -z "$(git status -s)" ]]; then
+        BUILD_ARGS+=("--build-arg" "SHA_HEAD_SHORT=$(git rev-parse --short HEAD)")
+    fi
+
+    podman build \
+        "${BUILD_ARGS[@]}" \
+        --pull=newer \
+        --tag "${target_image}:${tag}" \
+        .
+
+# Build the stable image (AlmaLinux-based)
+build-stable $target_image=(image_name + "-stable") $tag=default_tag:
     #!/usr/bin/env bash
 
     BUILD_ARGS=()
@@ -97,6 +113,7 @@ build $target_image=image_name $tag=default_tag:
     podman build \
         "${BUILD_ARGS[@]}" \
         --pull=newer \
+        -f Containerfile.stable \
         --tag "${target_image}:${tag}" \
         .
 
