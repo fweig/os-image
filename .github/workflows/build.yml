@@ -181,7 +181,7 @@ jobs:
           set -euo pipefail
 
           IMAGE_FULL="${{ env.IMAGE_REGISTRY }}/${{ env.IMAGE_NAME }}"
-          digest_file="$(mktemp)"
+          digest_file="$(sudo mktemp)"
           for tag in ${{ steps.metadata.outputs.tags }}; do
             if [[ "${tag}" == "${{ env.DEFAULT_TAG }}" ]]; then
               sudo podman push --digestfile "${digest_file}" "${{ env.IMAGE_NAME }}:${tag}" "${IMAGE_FULL}:${tag}"
@@ -190,7 +190,8 @@ jobs:
             fi
           done
 
-          digest="$(cat "${digest_file}")"
+          digest="$(sudo cat "${digest_file}")"
+          sudo rm -f "${digest_file}"
           echo "digest=${digest}" >> "$GITHUB_OUTPUT"
 
       # This section is optional and only needs to be enabled if you plan on distributing
