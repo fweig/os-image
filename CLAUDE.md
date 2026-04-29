@@ -4,9 +4,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Feldspar is a bootc container-based OS image project derived from Universal Blue. It produces two images:
-- **Feldspar** — Gaming image (Fedora-based, via `Containerfile.feldspar`)
+Feldspar is a bootc container-based OS image project derived from Universal Blue. It produces three images:
+- **Feldspar** — Gaming image (Fedora/Kinoite-based, via `Containerfile.feldspar`)
 - **Feldspar Granite** — Stable image (AlmaLinux-based, via `Containerfile.granite`)
+- **Feldspar Quartz** — Minimal GNOME image (Fedora/Silverblue-based, via `Containerfile.quartz`)
 
 ## Build Commands
 
@@ -16,6 +17,7 @@ All commands use `just` (task runner). Run `just` with no arguments to see avail
 # Build container images
 just build                    # Build Feldspar (gaming)
 just build-granite            # Build Feldspar Granite (stable)
+just build-quartz             # Build Feldspar Quartz (minimal GNOME)
 
 # Build bootable disk images (requires sudo, uses Bootc Image Builder)
 just build-qcow2             # Build QCOW2 VM image
@@ -42,16 +44,18 @@ just clean                   # Remove build artifacts (_build*, output/)
 ## Architecture
 
 **Build flow:**
-1. `Containerfile.feldspar` / `Containerfile.granite` define image builds from their respective base images
-2. Build scripts in `build_files/gaming/` / `build_files/granite/` are mounted and executed as separate layers during build
+1. `Containerfile.feldspar` / `Containerfile.granite` / `Containerfile.quartz` define image builds from their respective base images
+2. Build scripts in `build_files/gaming/` / `build_files/granite/` / `build_files/quartz/` are mounted and executed as separate layers during build
 3. `bootc container lint` validates the final image
 4. Disk images (QCOW2/ISO/raw) are generated using Bootc Image Builder (BIB)
 
 **Key files:**
 - `Containerfile.feldspar` - Gaming image build (Fedora/Kinoite-based)
 - `Containerfile.granite` - Stable image build (AlmaLinux-based)
+- `Containerfile.quartz` - Minimal GNOME image build (Fedora/Silverblue-based)
 - `build_files/gaming/` - Gaming build scripts (one per layer: remove-packages, install-base, install-firefox-beta, install-gaming, install-multimedia, configure-system)
 - `build_files/granite/` - Stable build scripts (one per layer: remove-packages, install-base, install-firefox, install-multimedia, configure-system)
+- `build_files/quartz/` - Minimal GNOME build scripts (one per layer: remove-packages, install-firefox-beta)
 - `Justfile` - All build/run commands, configurable via `image_name`, `default_tag`, `bib_image` variables
 - `disk_config/disk.toml` - QCOW2/raw disk configuration (20 GiB Btrfs root)
 - `disk_config/iso-*.toml` - ISO installer configurations with Anaconda kickstart

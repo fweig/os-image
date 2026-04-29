@@ -24,8 +24,17 @@ Based on `quay.io/almalinuxorg/atomic-desktop-kde:10`. A KDE Plasma desktop for 
 - SELinux disabled, Spectre mitigations off for performance
 - Podman socket enabled
 
-Both editions remove KDE bloat (Akonadi, KDE Connect, Kate, Kwrite, Krfb, etc.) and VM/network packages (open-vm-tools, realmd, Samba, spice-vdagent).
+The KDE editions remove KDE bloat (Akonadi, KDE Connect, Kate, Kwrite, Krfb, etc.) and VM/network packages (open-vm-tools, realmd, Samba, spice-vdagent).
 
+### Feldspar Quartz (Minimal GNOME)
+
+Based on `ghcr.io/ublue-os/silverblue-main:latest`. A minimal GNOME desktop in the spirit of [Aeon](https://aeondesktop.github.io/).
+
+- Firefox Beta (Mozilla RPM repo)
+- Stripped pre-installed apps (gnome-tour, gnome-remote-desktop, gnome-user-share, yelp, malcontent, classic-mode shell extensions)
+- No enterprise auth (realmd, sssd, samba, cifs-utils)
+- No buildah/toolbox/virtualbox-guest-additions (distrobox + podman are kept)
+- Printing/scanning kept; install everything else via Flatpak
 
 ## Switching to this image
 
@@ -37,6 +46,9 @@ sudo bootc switch ghcr.io/fweig/feldspar:latest
 
 # Feldspar Granite (Stable)
 sudo bootc switch ghcr.io/fweig/feldspar-granite:latest
+
+# Feldspar Quartz (Minimal GNOME)
+sudo bootc switch ghcr.io/fweig/feldspar-quartz:latest
 ```
 
 ## Usage
@@ -49,6 +61,7 @@ just                          # List all available recipes
 # Build container images
 just build                    # Feldspar (Gaming)
 just build-granite            # Feldspar Granite (Stable)
+just build-quartz             # Feldspar Quartz (Minimal GNOME)
 
 # Build bootable disk images (requires sudo)
 just build-qcow2              # QCOW2 VM image
@@ -77,8 +90,10 @@ GitHub Actions builds and publishes both editions daily to GHCR with Cosign sign
 |---|---|
 | `Containerfile.feldspar` | Feldspar image definition (Fedora/Kinoite) |
 | `Containerfile.granite` | Feldspar Granite image definition (AlmaLinux) |
+| `Containerfile.quartz` | Feldspar Quartz image definition (Fedora/Silverblue) |
 | `build_files/gaming/` | Gaming edition scripts (one per image layer) |
 | `build_files/granite/` | Stable edition scripts (one per image layer) |
+| `build_files/quartz/` | Minimal GNOME edition scripts (one per image layer) |
 | `Justfile` | All build/run/lint commands |
 | `disk_config/` | Disk and ISO configuration for Bootc Image Builder |
 | `.github/workflows/build.yml` | Container image CI (build + publish + sign) |
