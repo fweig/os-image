@@ -5,22 +5,10 @@ COPY build_files/quartz /
 # Base Image - Universal Blue Silverblue (GNOME)
 FROM ghcr.io/ublue-os/silverblue-main:latest
 
-### [IM]MUTABLE /opt
-RUN rm /opt && mkdir /opt
-
 ### MODIFICATIONS
-## Each script is a separate layer for smaller updates.
-
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
-    /ctx/remove-packages.sh
-
-RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
-    --mount=type=cache,dst=/var/cache \
-    /ctx/install-firefox-beta.sh
-
-RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
-    /ctx/configure-system.sh
+    bash /ctx/build.sh
 
 ### LINTING
 ## Verify final image and contents are correct.
