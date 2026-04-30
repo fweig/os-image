@@ -59,5 +59,3 @@ dnf5 remove -y \
 	yelp \
 	yelp-libs \
 	yelp-xsl
-
-dnf5 autoremove -y

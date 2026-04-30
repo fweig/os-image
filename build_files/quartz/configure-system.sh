@@ -23,3 +23,4 @@ WantedBy=multi-user.target
 EOF
 
 systemctl enable btrfs-compress-default.service
+systemctl enable gdm.service
