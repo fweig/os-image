@@ -1,7 +1,7 @@
 #!/bin/bash
 set -ouex pipefail
 
-dnf5 install -y \
+dnf5 --setopt=install_weak_deps=False install -y \
 	file-roller \
 	flatpak \
 	gdm \

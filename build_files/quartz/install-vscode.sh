@@ -15,4 +15,5 @@ gpgkey=https://packages.microsoft.com/keys/microsoft.asc
 EOF
 
 dnf5 makecache --refresh
-dnf5 install -y code
+# Explicitly enable weak deps here, to pull in socat
+dnf5 --setopt=install_weak_deps=True install -y code
