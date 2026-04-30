@@ -31,10 +31,12 @@ The KDE editions remove KDE bloat (Akonadi, KDE Connect, Kate, Kwrite, Krfb, etc
 Based on `ghcr.io/ublue-os/silverblue-main:latest`. A minimal GNOME desktop in the spirit of [Aeon](https://aeondesktop.github.io/).
 
 - Firefox Beta (Mozilla RPM repo), Visual Studio Code (Microsoft RPM repo)
+- GNOME Text Editor, File Roller, GNOME Disks
 - Stripped pre-installed apps (gnome-tour, gnome-remote-desktop, gnome-user-share, yelp, malcontent, classic-mode shell extensions)
+- No preinstalled Flatpaks; Flathub enabled and Fedora Flatpak remote removed
 - No enterprise auth (realmd, sssd, samba, cifs-utils)
 - No buildah/toolbox/virtualbox-guest-additions (distrobox + podman are kept)
-- Printing/scanning kept; install everything else via Flatpak
+- Printing/scanning kept; install additional apps from Flathub
 
 ## Switching to this image
 
