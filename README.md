@@ -33,7 +33,7 @@ Based on `ghcr.io/ublue-os/silverblue-main:latest`. A minimal GNOME desktop in t
 - Firefox Beta (Mozilla RPM repo), Visual Studio Code (Microsoft RPM repo)
 - Ptyxis, GNOME Text Editor, File Roller, GNOME Disks
 - Stripped pre-installed apps (gnome-tour, gnome-remote-desktop, gnome-user-share, yelp, malcontent, classic-mode shell extensions)
-- No preinstalled Flatpaks; Flathub enabled and Fedora Flatpak remote removed
+- Flatpak included; no preinstalled Flatpaks; Flathub enabled and Fedora Flatpak remote removed
 - No enterprise auth (realmd, sssd, samba, cifs-utils)
 - No buildah/toolbox/virtualbox-guest-additions (distrobox + podman are kept)
 - Printing/scanning kept; install additional apps from Flathub

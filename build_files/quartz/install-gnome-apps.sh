@@ -3,6 +3,7 @@ set -ouex pipefail
 
 dnf5 install -y \
 	file-roller \
+	flatpak \
 	gdm \
 	gnome-disk-utility \
 	gnome-shell \
