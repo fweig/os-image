@@ -7,7 +7,9 @@ dnf5 install -y \
 	gdm \
 	gnome-disk-utility \
 	gnome-shell \
+	gnome-software \
 	gnome-session \
 	gnome-session-wayland-session \
 	gnome-text-editor \
+	nautilus \
 	ptyxis
