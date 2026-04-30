@@ -8,4 +8,5 @@ dnf5 install -y \
 	gnome-shell \
 	gnome-session \
 	gnome-session-wayland-session \
-	gnome-text-editor
+	gnome-text-editor \
+	ptyxis

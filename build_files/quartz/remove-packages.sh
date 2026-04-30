@@ -32,6 +32,8 @@ dnf5 remove -y \
 	gnome-shell-extension-launch-new-instance \
 	gnome-shell-extension-places-menu \
 	gnome-shell-extension-window-list \
+	gnome-terminal \
+	gnome-terminal-nautilus \
 	gnome-tour \
 	gnome-user-docs \
 	gnome-user-share \
