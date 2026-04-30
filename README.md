@@ -30,7 +30,7 @@ The KDE editions remove KDE bloat (Akonadi, KDE Connect, Kate, Kwrite, Krfb, etc
 
 Based on `ghcr.io/ublue-os/silverblue-main:latest`. A minimal GNOME desktop in the spirit of [Aeon](https://aeondesktop.github.io/).
 
-- Firefox Beta (Mozilla RPM repo)
+- Firefox Beta (Mozilla RPM repo), Visual Studio Code (Microsoft RPM repo)
 - Stripped pre-installed apps (gnome-tour, gnome-remote-desktop, gnome-user-share, yelp, malcontent, classic-mode shell extensions)
 - No enterprise auth (realmd, sssd, samba, cifs-utils)
 - No buildah/toolbox/virtualbox-guest-additions (distrobox + podman are kept)
