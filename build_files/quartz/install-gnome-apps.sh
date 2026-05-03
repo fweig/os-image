@@ -12,4 +12,5 @@ dnf5 --setopt=install_weak_deps=False install -y \
 	gnome-session-wayland-session \
 	gnome-text-editor \
 	nautilus \
-	ptyxis
+	ptyxis \
+	thunderbird # not a gnome app, but flatpak is too old
