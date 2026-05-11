@@ -17,4 +17,5 @@ EOF
 dnf5 makecache --refresh
 dnf5 --setopt=install_weak_deps=False install -y \
 	code \
-	socat
+	socat \
+	python3-pip
