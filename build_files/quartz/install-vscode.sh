@@ -28,3 +28,6 @@ dnf5 install -y \
   gzip \
   bubblewrap \
   npm
+
+# install tinytex requirements
+dnf5 install -y perl wget curl xz tar fontconfig ghostscript
