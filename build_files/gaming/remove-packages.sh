@@ -2,7 +2,6 @@
 set -ouex pipefail
 
 dnf5 remove -y \
-sudo dnf remove -y \
 dragon \
 k3b \
 kaddressbook \
