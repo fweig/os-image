@@ -8,7 +8,6 @@ dnf5 install -y \
 dnf5 swap -y ffmpeg-free ffmpeg --allowerasing
 dnf5 install -y \
 discord \
-gstreamer1-plugins-bad-freeworld \
 gstreamer1-plugins-ugly \
 gstreamer1-libav \
 vlc
