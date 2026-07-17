@@ -1,11 +1,9 @@
 #!/bin/bash
 set -ouex pipefail
 
-# Enable Btrfs zstd compression on root and /var. BIB's filesystem
-# customizations don't support mount options, so we set the compression
-# as a Btrfs property — it lives in the filesystem metadata and applies
-# to all new writes regardless of mount options. Idempotent on reboot.
-cat > /usr/lib/systemd/system/btrfs-compress-default.service << 'EOF'
+# BIB does not support Btrfs mount options, so store the compression policy in
+# filesystem metadata and apply it to new writes on both root subvolumes.
+cat > /usr/lib/systemd/system/btrfs-compress-default.service <<'EOF'
 [Unit]
 Description=Set default Btrfs zstd compression on root subvolumes
 ConditionPathExists=/usr/bin/btrfs
@@ -23,4 +21,4 @@ WantedBy=multi-user.target
 EOF
 
 systemctl enable btrfs-compress-default.service
-systemctl enable gdm.service
+systemctl enable podman.socket

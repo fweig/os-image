@@ -85,7 +85,7 @@ sudoif command *args:
 # This will build an image 'aurora:lts' with DX and GDX enabled.
 #
 
-# Build the Feldspar gaming image (Fedora-based)
+# Build the Feldspar Plasma workstation image (Fedora-based)
 build $target_image=image_name $tag=default_tag:
     #!/usr/bin/env bash
 
@@ -117,7 +117,7 @@ build-granite $target_image=(image_name + "-granite") $tag=default_tag:
         --tag "${target_image}:${tag}" \
         .
 
-# Build the Feldspar Quartz minimal GNOME image (Silverblue-based)
+# Build the Feldspar Quartz GNOME workstation image (Silverblue-based)
 build-quartz $target_image=(image_name + "-quartz") $tag=default_tag:
     #!/usr/bin/env bash
 

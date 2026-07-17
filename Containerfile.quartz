@@ -1,6 +1,7 @@
 # Allow build scripts to be referenced without being copied into the final image
 FROM scratch AS ctx
-COPY build_files/quartz /
+COPY build_files/common /common
+COPY build_files/quartz /edition
 
 # Base Image - Universal Blue Silverblue (GNOME)
 FROM ghcr.io/ublue-os/silverblue-main:latest
@@ -8,7 +9,7 @@ FROM ghcr.io/ublue-os/silverblue-main:latest
 ### MODIFICATIONS
 RUN --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=cache,dst=/var/cache \
-    bash /ctx/build.sh
+    bash /ctx/edition/build.sh
 
 ### LINTING
 ## Verify final image and contents are correct.

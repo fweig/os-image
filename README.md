@@ -4,16 +4,16 @@ Custom bootc container-based OS images built on [Universal Blue](https://univers
 
 ## Editions
 
-### Feldspar (Gaming)
+### Feldspar (Plasma)
 
-Based on `ghcr.io/ublue-os/kinoite-main:latest`. A KDE Plasma desktop with gaming and multimedia focus.
+Based on `ghcr.io/ublue-os/kinoite-main:latest`. A general-purpose KDE Plasma workstation.
 
-- Firefox Beta (Mozilla RPM repo), Thunderbird, Nextcloud client
-- Steam, Discord, VLC, FFmpeg, GStreamer codecs (via RPMFusion)
-- Latest stable Mesa (via Terra)
+- Firefox Beta, Thunderbird, Nextcloud client, and Visual Studio Code
+- Steam, Discord, VLC, FFmpeg, and GStreamer codecs via RPM Fusion
+- npm, pip, and common development and document-tooling dependencies
+- Flathub enabled with Fedora Flatpaks removed
+- Btrfs zstd compression and the Podman socket enabled
 - KDE Rounded Corners effect
-- SELinux disabled, Spectre mitigations off for performance
-- Podman socket enabled
 
 ### Feldspar Granite (Stable)
 
@@ -24,32 +24,32 @@ Based on `quay.io/almalinuxorg/atomic-desktop-kde:10`. A KDE Plasma desktop for 
 - SELinux disabled, Spectre mitigations off for performance
 - Podman socket enabled
 
-The KDE editions remove KDE bloat (Akonadi, KDE Connect, Kate, Kwrite, Krfb, etc.) and VM/network packages (open-vm-tools, realmd, Samba, spice-vdagent).
+Granite retains its own package and system policy.
 
-### Feldspar Quartz (Minimal GNOME)
+### Feldspar Quartz (GNOME)
 
-Based on `ghcr.io/ublue-os/silverblue-main:latest`. A minimal GNOME desktop in the spirit of [Aeon](https://aeondesktop.github.io/).
+Based on `ghcr.io/ublue-os/silverblue-main:latest`. A general-purpose GNOME workstation with the same shared software and system policy as Feldspar.
 
-- Firefox Beta (Mozilla RPM repo), Visual Studio Code (Microsoft RPM repo)
-- Ptyxis, GNOME Files, GNOME Software, GNOME Text Editor, File Roller, GNOME Disks
-- Stripped pre-installed apps (gnome-tour, gnome-remote-desktop, gnome-user-share, yelp, malcontent, classic-mode shell extensions)
-- Flatpak included; no preinstalled Flatpaks; Flathub enabled and Fedora Flatpak remote removed
-- No enterprise auth (realmd, sssd, samba, cifs-utils)
-- No buildah/toolbox/virtualbox-guest-additions (distrobox + podman are kept)
-- Printing/scanning kept; install additional apps from Flathub
+- Firefox Beta, Thunderbird, Nextcloud client, and Visual Studio Code
+- Steam, Discord, VLC, FFmpeg, and GStreamer codecs via RPM Fusion
+- npm, pip, and common development and document-tooling dependencies
+- Ptyxis, GNOME Files, GNOME Software, GNOME Text Editor, File Roller, and GNOME Disks
+- Flathub enabled with Fedora Flatpaks removed
+- Btrfs zstd compression and the Podman socket enabled
+- Removes inherited remote access, enterprise integration, guest tooling, documentation, and legacy GNOME components
 
 ## Switching to this image
 
 From any bootc-based system:
 
 ```bash
-# Feldspar (Gaming)
+# Feldspar (Plasma)
 sudo bootc switch ghcr.io/fweig/feldspar:latest
 
 # Feldspar Granite (Stable)
 sudo bootc switch ghcr.io/fweig/feldspar-granite:latest
 
-# Feldspar Quartz (Minimal GNOME)
+# Feldspar Quartz (GNOME)
 sudo bootc switch ghcr.io/fweig/feldspar-quartz:latest
 ```
 
@@ -61,9 +61,9 @@ Requires [just](https://just.systems/), [Podman](https://podman.io/), and option
 just                          # List all available recipes
 
 # Build container images
-just build                    # Feldspar (Gaming)
+just build                    # Feldspar (Plasma)
 just build-granite            # Feldspar Granite (Stable)
-just build-quartz             # Feldspar Quartz (Minimal GNOME)
+just build-quartz             # Feldspar Quartz (GNOME)
 
 # Build bootable disk images (requires sudo)
 just build-qcow2              # QCOW2 VM image
@@ -93,9 +93,10 @@ GitHub Actions builds and publishes both editions daily to GHCR with Cosign sign
 | `Containerfile.feldspar` | Feldspar image definition (Fedora/Kinoite) |
 | `Containerfile.granite` | Feldspar Granite image definition (AlmaLinux) |
 | `Containerfile.quartz` | Feldspar Quartz image definition (Fedora/Silverblue) |
-| `build_files/gaming/` | Gaming edition scripts |
+| `build_files/common/` | Shared workstation scripts for Feldspar and Quartz |
+| `build_files/feldspar/` | Feldspar Plasma-specific scripts |
 | `build_files/granite/` | Stable edition scripts |
-| `build_files/quartz/` | Minimal GNOME edition scripts |
+| `build_files/quartz/` | Quartz GNOME-specific scripts |
 | `Justfile` | All build/run/lint commands |
 | `disk_config/` | Disk and ISO configuration for Bootc Image Builder |
 | `.github/workflows/build.yml` | Container image CI (build + publish + sign) |

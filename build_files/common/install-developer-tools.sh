@@ -16,18 +16,17 @@ EOF
 
 dnf5 makecache --refresh
 dnf5 --setopt=install_weak_deps=False install -y \
+	bubblewrap \
+	ca-certificates \
 	code \
+	curl \
+	fontconfig \
+	ghostscript \
+	gzip \
+	npm \
+	perl \
+	python3-pip \
 	socat \
-	python3-pip
-
-# install npm
-dnf5 install -y \
-  curl \
-  ca-certificates \
-  tar \
-  gzip \
-  bubblewrap \
-  npm
-
-# install tinytex requirements
-dnf5 install -y perl wget curl xz tar fontconfig ghostscript
+	tar \
+	wget \
+	xz
