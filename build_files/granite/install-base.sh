@@ -1,4 +1,6 @@
 #!/bin/bash
 set -ouex pipefail
 
-dnf install -y thunderbird
+dnf install -y \
+	btop \
+	thunderbird

@@ -24,6 +24,7 @@ dnf5 remove -y \
 	gnome-tour \
 	gnome-user-docs \
 	gnome-user-share \
+	htop \
 	libwinpr \
 	malcontent \
 	malcontent-control \

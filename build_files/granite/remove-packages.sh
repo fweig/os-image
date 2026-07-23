@@ -5,6 +5,7 @@ dnf remove -y \
 akonadi-server \
 akonadi-server-mysql \
 firefox \
+htop \
 kate \
 kde-connect \
 kio-gdrive \
