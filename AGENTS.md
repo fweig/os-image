@@ -60,7 +60,7 @@ Disk image and VM recipes may need rootful Podman or sudo. Do not run expensive 
 - `Containerfile.feldspar` - Gaming image build (Fedora/Kinoite-based)
 - `Containerfile.granite` - Stable image build (AlmaLinux-based)
 - `Containerfile.quartz` - Minimal GNOME image build (Fedora/Silverblue-based)
-- `build_files/gaming/` - Modular scripts and `build.sh` entrypoint for the Gaming image
+- `build_files/feldspar/` - Modular scripts and `build.sh` entrypoint for the Gaming image
 - `build_files/granite/` - Modular scripts and `build.sh` entrypoint for the Stable image
 - `build_files/quartz/` - Modular scripts and `build.sh` entrypoint for the Minimal GNOME image
 - `Justfile` - All build/run commands, configurable via `image_name`, `default_tag`, `bib_image` variables

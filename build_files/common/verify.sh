@@ -2,6 +2,7 @@
 set -ouex pipefail
 
 rpm -q \
+	brave-origin \
 	btop \
 	code \
 	firefox-beta \
@@ -9,7 +10,8 @@ rpm -q \
 	nextcloud-client \
 	steam \
 	thunderbird \
-	vlc
+	vlc \
+	xlsclients
 
 if rpm -q htop; then
 	echo "htop must not be installed" >&2
