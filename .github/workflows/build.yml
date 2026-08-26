@@ -110,7 +110,6 @@ jobs:
 
           build_args=(
             --file "${{ matrix.containerfile }}"
-            --format docker
             --tag "localhost/${{ env.IMAGE_NAME }}:${{ env.DEFAULT_TAG }}"
           )
 
