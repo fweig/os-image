@@ -118,31 +118,7 @@ jobs:
           mountopt = "nodev,redirect_dir=off"
           EOF
 
-          sudo podman info --format json |
-            jq '.store | {
-              graphDriverName,
-              graphOptions,
-              graphStatus
-            }'
-
           sudo podman info --format '{{.Store.GraphStatus.NativeOverlayDiff}}'
-
-          sudo podman --log-level=debug info 2>&1 \
-            | grep -iE 'native.?diff|overlay|redirect|opaque'
-
-      - name: Diagnose container storage
-        run: |
-          echo "Runner image: ${ImageVersion:-unknown}"
-          sudo podman version
-          buildah version
-          sudo podman info --format json |
-            jq '.store | {
-              graphDriverName,
-              graphRoot,
-              graphOptions,
-              graphStatus
-            }'
-          df -h / /var/lib/containers
 
       - name: Build Image
         shell: bash
