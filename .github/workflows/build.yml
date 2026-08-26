@@ -103,6 +103,28 @@ jobs:
           sep-tags: " "
           sep-annotations: " "
 
+      - name: Configure native OverlayFS
+        shell: bash
+        run: |
+          sudo install -d -m 0755 /etc/containers
+
+          sudo tee /etc/containers/storage.conf >/dev/null <<'EOF'
+          [storage]
+          driver = "overlay"
+          runroot = "/run/containers/storage"
+          graphroot = "/var/lib/containers/storage"
+
+          [storage.options.overlay]
+          mountopt = "nodev"
+          EOF
+
+          sudo podman info --format json |
+            jq '.store | {
+              graphDriverName,
+              graphOptions,
+              graphStatus
+            }'
+
       - name: Diagnose container storage
         run: |
           echo "Runner image: ${ImageVersion:-unknown}"
