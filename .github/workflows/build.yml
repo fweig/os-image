@@ -103,6 +103,20 @@ jobs:
           sep-tags: " "
           sep-annotations: " "
 
+      - name: Diagnose container storage
+        run: |
+          echo "Runner image: ${ImageVersion:-unknown}"
+          sudo podman version
+          buildah version
+          sudo podman info --format json |
+            jq '.store | {
+              graphDriverName,
+              graphRoot,
+              graphOptions,
+              graphStatus
+            }'
+          df -h / /var/lib/containers
+
       - name: Build Image
         shell: bash
         run: |
