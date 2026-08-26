@@ -111,8 +111,8 @@ jobs:
           sudo tee /etc/containers/storage.conf >/dev/null <<'EOF'
           [storage]
           driver = "overlay"
-          runroot = "/run/containers/storage"
-          graphroot = "/var/lib/containers/storage"
+          runroot = "/run/containers/storage-native"
+          graphroot = "/var/lib/containers/storage-native"
 
           [storage.options.overlay]
           mountopt = "nodev,redirect_dir=off"
