@@ -115,7 +115,7 @@ jobs:
           graphroot = "/var/lib/containers/storage"
 
           [storage.options.overlay]
-          mountopt = "nodev"
+          mountopt = "nodev,redirect_dir=off"
           EOF
 
           sudo podman info --format json |
@@ -124,6 +124,11 @@ jobs:
               graphOptions,
               graphStatus
             }'
+
+          sudo podman info --format '{{.Store.GraphStatus.NativeOverlayDiff}}'
+
+          sudo podman --log-level=debug info 2>&1 \
+            | grep -iE 'native.?diff|overlay|redirect|opaque'
 
       - name: Diagnose container storage
         run: |
