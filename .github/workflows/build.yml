@@ -103,6 +103,23 @@ jobs:
           sep-tags: " "
           sep-annotations: " "
 
+      - name: Configure native OverlayFS
+        shell: bash
+        run: |
+          sudo install -d -m 0755 /etc/containers
+
+          sudo tee /etc/containers/storage.conf >/dev/null <<'EOF'
+          [storage]
+          driver = "overlay"
+          runroot = "/run/containers/storage-native"
+          graphroot = "/var/lib/containers/storage-native"
+
+          [storage.options.overlay]
+          mountopt = "nodev,redirect_dir=off"
+          EOF
+
+          sudo podman info --format '{{.Store.GraphStatus.NativeOverlayDiff}}'
+
       - name: Build Image
         shell: bash
         run: |
