@@ -3,14 +3,103 @@ set -ouex pipefail
 
 # Remove only applications superseded by the shared workstation selection and
 # a small set of preinstalled games. Retain general-purpose Plasma utilities.
+# List copied from Nobara wiki
+# Plus additions of my own
 dnf5 remove -y \
 	dragon \
-	htop \
+	k3b \
 	kaddressbook \
+	kaddressbook-libs \
+	kdeaccessibility* \
+	kdepim-addons \
+	kdepim-runtime \
+	kdepim-runtime-libs \
+	kdiagram \
+	kf5-akonadi-calendar \
+	kf5-akonadi-mime \
+	kf5-akonadi-notes \
+	kf5-akonadi-search \
+	kf5-calendarsupport \
+	kf5-eventviews \
+	kf5-incidenceeditor \
+	kf5-kcalendarcore \
+	kf5-kcalendarutils \
+	kf5-kdav \
+	kf5-kidentitymanagement \
+	kf5-kimap \
+	kf5-kitinerary \
+	kf5-kldap \
+	kf5-kmailtransport \
+	kf5-kmailtransport-akonadi \
+	kf5-kmbox \
+	kf5-kontactinterface \
+	kf5-kpimtextedit \
+	kf5-kpkpass \
+	kf5-kross-core \
+	kf5-ksmtp \
+	kf5-ktnef \
+	kf5-libgravatar \
+	kf5-libkdepim \
+	kf5-libkleo \
+	kf5-libksane \
+	kf5-libksieve \
+	kf5-mailcommon \
+	kf5-mailimporter \
+	kf5-mailimporter-akonadi \
+	kf5-messagelib \
+	kf5-pimcommon \
+	kf5-pimcommon-akonadi \
+	kio-gdrive \
+	kipi-plugins \
 	kmahjongg \
 	kmail \
+	kmail-account-wizard \
+	kmail-libs \
 	kmines \
+	kolourpaint \
+	kolourpaint-libs \
 	kontact \
+	kontact-libs \
+	konversation \
 	korganizer \
+	korganizer-libs \
 	kpat \
-	plasma-welcome
+	krdc \
+	krdc-libs \
+	krfb \
+	krfb-libs \
+	krusader \
+	ktorrent \
+	kwrite \
+	libkdegames \
+	libkgapi \
+	libkmahjongg \
+	libkmahjongg-data \
+	libkolabxml \
+	libphonenumber \
+	libwinpr \
+	mpage \
+	pim-data-exporter \
+	pim-data-exporter-libs \
+	pim-sieve-editor \
+	plasma-welcome \
+	qgpgme \
+	qt5-qtwebengine-freeworld \
+	qtkeychain-qt5 \
+	scim* \
+	system-config-printer \
+	system-config-services \
+	system-config-users \
+	unoconv \
+	xsane \
+	xsane-gimp \
+	abrt-desktop \
+	plasma-welcome \
+	akonadi akonadi-server \
+	htop \
+	open-vm-tools \
+	python3-boto3 \
+	python3-botocore \
+	qemu-user-static-aarch64 \
+	virtualbox-guest-additions \
+	fedora-bookmarks \
