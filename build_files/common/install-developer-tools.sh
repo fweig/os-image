@@ -31,3 +31,5 @@ dnf5 --setopt=install_weak_deps=False install -y \
 	wget \
 	xz \
 	wayland-devel \
+	freetype-devel \
+	libxkbcommon-devel \
