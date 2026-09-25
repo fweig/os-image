@@ -29,4 +29,5 @@ dnf5 --setopt=install_weak_deps=False install -y \
 	socat \
 	tar \
 	wget \
-	xz
+	xz \
+	wayland-devel \
